@@ -23,9 +23,12 @@ private fun getCodeMap( map: MutableMap<String, Double>, code: String = ""): Map
     val averageProbability = map.values.sum() / 2
     while( sumProbability < averageProbability ) {
         val entry = map.maxBy { it.value }
+        sumProbability+=entry.value
+
+        if(sumProbability > averageProbability && firstMap.isNotEmpty()) break
+
         map.remove(entry.key)
         firstMap[entry.key] = entry.value
-        sumProbability+=entry.value
 
     }
     return getCodeMap(firstMap, "${code}0") + getCodeMap( map,"${code}1")
